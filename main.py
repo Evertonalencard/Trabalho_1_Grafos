@@ -1,13 +1,13 @@
 import matplotlib
 import matplotlib.pyplot as plt
 
-# Exemplo simples de teste para matplotlib
-x = [1, 2, 3, 4, 5]
-y = [2, 4, 6, 8, 10]
+from MAdj import MAdj
 
-plt.plot(x, y, marker='o')
-plt.title('Exemplo de teste com matplotlib')
-plt.xlabel('Eixo X')
-plt.ylabel('Eixo Y')
-plt.grid(True)
-plt.show()
+
+if __name__ == '__main__':
+	fig, ax = MAdj.print_matrix()
+	# salvar imagem e mostrar
+	fig.savefig('matriz_fronteiras.png', dpi=200)
+	import matplotlib.pyplot as plt
+	plt.show()
+
