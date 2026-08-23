@@ -19,49 +19,49 @@ class MAdj:
 		# AC
 		[False, False, True,  False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, True,  False, False, False, False, False, False],
 		# AL
-		[False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, True,  False, False, False, False, False, False, False, False, False, True,  False],
+		[False, False, False, False, True, False, False, False, False, False, False, False, False, False, False, True,  False, False, False, False, False, False, False, False, False, True,  False],
 		# AM
 		[True,  False, False, False, False, False, False, False, False, False, False, False, True,  True,  False, False, False, False, False, False, True,  True,  False, False, False, False, False],
 		# AP
 		[False, False, False, False, False, False, False, False, False, False, False, False, False, True,  False, False, False, False, False, False, False, False, False, False, False, False, False],
 		# BA
-		[False, True,  False, False, False, False, False, False, True,  False, True,  False, False, False, False, True,  True,  False, False, False, False, False, False, False, False, True,  True ],
+		[False, True,  False, False, False, False, False, True, True,  False, True,  False, False, False, False, True,  True,  False, False, False, False, False, False, False, False, True,  True ],
 		# CE
 		[False, False, False, False, False, False, False, False, False, False, False, False, False, False, True,  True,  True,  False, False, True,  False, False, False, False, False, False, False],
 		# DF
-		[False, False, False, False, False, False, False, False, True,  False, True,  False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False],
+		[False, False, False, False, False, False, False, False, True,  False, False,  False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False],
 		# ES
-		[False, False, False, False, False, False, False, False, False, False, True,  False, False, False, False, False, False, False, True,  False, False, False, False, False, False, False, False],
+		[False, False, False, False, True, False, False, False, False, False, True,  False, False, False, False, False, False, False, True,  False, False, False, False, False, False, False, False],
 		# GO
 		[False, False, False, False, True,  False, True,  False, False, False, True,  True,  True,  False, False, False, False, False, False, False, False, False, False, False, False, False, True ],
 		# MA
 		[False, False, False, False, False, False, False, False, False, False, False, False, False, True,  False, False, True,  False, False, False, False, False, False, False, False, False, True ],
 		# MG
-		[False, False, False, False, True,  False, True,  True,  True,  False, False, True,  False, False, False, False, False, False, True,  False, False, False, False, False, True,  False, False],
+		[False, False, False, False, True,  False, False,  True,  True,  False, False, True,  False, False, False, False, False, False, True,  False, False, False, False, False, True,  False, False],
 		# MS
 		[False, False, False, False, False, False, False, False, True,  False, True,  False, True,  False, False, False, False, True,  False, False, False, False, False, False, True,  False, False],
 		# MT
 		[False, False, True,  False, False, False, False, False, True,  False, False, True,  False, True,  False, False, False, False, False, False, True,  False, False, False, False, False, True ],
 		# PA
-		[False, False, True,  True,  False, False, False, False, False, True,  False, False, True,  False, False, False, False, False, False, False, False, False, False, False, False, False, True ],
+		[False, False, True,  True,  False, False, False, False, False, True,  False, False, True,  False, False, False, False, False, False, False, False, True, False, False, False, False, True ],
 		# PB
 		[False, False, False, False, False, True,  False, False, False, False, False, False, False, False, False, True,  False, False, False, True,  False, False, False, False, False, False, False],
 		# PE
-		[False, True,  False, False, True,  True,  False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False],
+		[False, True,  False, False, True,  True,  False, False, False, False, False, False, False, False, True, False, False, False, False, False, False, False, False, False, False, False, False],
 		# PI
-		[False, False, False, False, True,  True,  False, False, False, True,  False, False, False, False, False, True,  False, False, False, False, False, False, False, False, False, False, False],
+		[False, False, False, False, True,  True,  False, False, False, True,  False, False, False, False, False, True,  False, False, False, False, False, False, False, False, False, False, True],
 		# PR
-		[False, False, False, False, False, False, False, False, False, False, False, True,  False, False, False, False, False, False, False, False, False, False, True,  True,  True,  False, False],
+		[False, False, False, False, False, False, False, False, False, False, False, True,  False, False, False, False, False, False, False, False, False, False, False,  True,  True,  False, False],
 		# RJ
-		[False, False, False, False, False, False, False, True,  False, False, True,  False, False, False, False, False, False, False, False, False, False, False, False, True,  False, False, False],
+		[False, False, False, False, False, False, False, True,  False, False, True,  False, False, False, False, False, False, False, False, False, False, False, False, False,  True, False, False],
 		# RN
 		[False, False, False, False, False, True,  False, False, False, False, False, False, False, False, True,  False, False, False, False, False, False, False, False, False, False, False, False],
 		# RO
 		[True,  False, True,  False, False, False, False, False, False, False, False, False, True,  False, False, False, False, False, False, False, False, False, False, False, False, False, False],
 		# RR
-		[False, False, True,  False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False],
+		[False, False, True,  False, False, False, False, False, False, False, False, False, False, True, False, False, False, False, False, False, False, False, False, False, False, False, False],
 		# RS
-		[False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, True,  False, False, False, False, False, True,  False, False, False],
+		[False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,  False, False, False, False, False, True,  False, False, False],
 		# SC
 		[False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, True,  False, False, False, False, True,  False, False, False, False],
 		# SP
@@ -69,7 +69,7 @@ class MAdj:
 		# SE
 		[False, True,  False, False, True,  False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False],
 		# TO
-		[False, False, False, False, True,  False, False, False, True,  True,  False, False, True,  True,  False, False, False, False, False, False, False, False, False, False, False, False, False],
+		[False, False, False, False, True,  False, False, False, True,  True,  False, False, True,  True,  False, False, True, False, False, False, False, False, False, False, False, False, False],
 	]
 
 	@classmethod
@@ -105,6 +105,98 @@ class MAdj:
 
 		# Retornar fig/ax para quem chamar; não forçar show/ save aqui
 		return fig, ax
+
+	@classmethod
+	def calcular_graus(cls):
+		graus = {}
+		for i, estado in enumerate(cls.STATES):
+			grau = sum(cls.MATRIX[i])
+			graus[estado] = grau
+		return graus
+
+
+	@classmethod
+	def listar_vizinhos(cls, estado):
+		indice = cls.STATES.index(estado)
+		vizinhos = []
+
+		for j, eh_vizinho in enumerate(cls.MATRIX[indice]):
+			if eh_vizinho:
+				vizinhos.append(cls.STATES[j])
+
+		return vizinhos
+
+	@classmethod
+	def estados_com_grau_maximo(cls):
+		graus = cls.calcular_graus()
+		maior_grau = max(graus.values())
+
+		estados = []
+		for estado, grau in graus.items():
+			if grau == maior_grau:
+				estados.append(estado)
+
+		return maior_grau, estados
+
+	@classmethod
+	def estados_com_grau_minimo(cls):
+		graus = cls.calcular_graus()
+		menor_grau = min(graus.values())
+
+		estados = []
+		for estado, grau in graus.items():
+			if grau == menor_grau:
+				estados.append(estado)
+
+		return menor_grau, estados
+
+	@classmethod
+	def frequencia_dos_graus(cls):
+		graus = cls.calcular_graus()
+		frequencia = {}
+
+		for grau in graus.values():
+			if grau not in frequencia:
+				frequencia[grau] = 0
+			frequencia[grau] += 1
+
+		return frequencia
+
+	@classmethod
+	def plotar_histograma_graus(cls):
+		graus = list(cls.calcular_graus().values())
+
+		plt.figure(figsize=(8, 5))
+		plt.hist(graus, bins=range(min(graus), max(graus) + 2), align='left',
+				color='skyblue', edgecolor='black', rwidth=0.8)
+
+		plt.xlabel('Grau')
+		plt.ylabel('Frequência')
+		plt.title('Histograma da Frequência dos Graus')
+		plt.xticks(range(min(graus), max(graus) + 1))
+		plt.grid(axis='y', linestyle='--', alpha=0.7)
+		plt.tight_layout()
+		plt.show()
+
+	@classmethod
+	def mostrar_resultados(cls):
+		maior_grau, estados_max = cls.estados_com_grau_maximo()
+		menor_grau, estados_min = cls.estados_com_grau_minimo()
+
+		print('Estados com grau máximo:', maior_grau)
+		for estado in estados_max:
+			print(f'- {estado}: vizinhos = {cls.listar_vizinhos(estado)}')
+
+		print('\nEstados com grau mínimo:', menor_grau)
+		for estado in estados_min:
+			print(f'- {estado}: vizinhos = {cls.listar_vizinhos(estado)}')
+
+		print('\nFrequência dos graus:')
+		frequencia = cls.frequencia_dos_graus()
+		for grau in sorted(frequencia):
+			print(f'Grau {grau}: {frequencia[grau]} estado(s)')
+
+	
 
 
     
