@@ -5,9 +5,14 @@ from MAdj import MAdj
 
 
 if __name__ == '__main__':
-	fig, ax = MAdj.print_matrix()
 	# salvar imagem e mostrar
+	fig, ax = MAdj.print_matrix()
 	fig.savefig('matriz_fronteiras.png', dpi=200)
-	import matplotlib.pyplot as plt
 	plt.show()
+
+	#mostra grau maximo, minimo e vizinhos
+	MAdj.mostrar_resultados()
+
+	# Mostra histograma da frequência dos graus
+	MAdj.plotar_histograma_graus()
 
