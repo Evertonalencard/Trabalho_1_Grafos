@@ -183,18 +183,26 @@ class MAdj:
 		maior_grau, estados_max = cls.estados_com_grau_maximo()
 		menor_grau, estados_min = cls.estados_com_grau_minimo()
 
+		print('---------------------------------------------------------------------------------------')
+
 		print('Estados com grau máximo:', maior_grau)
 		for estado in estados_max:
 			print(f'- {estado}: vizinhos = {cls.listar_vizinhos(estado)}')
+
+		print('---------------------------------------------------------------------------------------')
 
 		print('\nEstados com grau mínimo:', menor_grau)
 		for estado in estados_min:
 			print(f'- {estado}: vizinhos = {cls.listar_vizinhos(estado)}')
 
+		print('---------------------------------------------------------------------------------------')
+
 		print('\nFrequência dos graus:')
 		frequencia = cls.frequencia_dos_graus()
 		for grau in sorted(frequencia):
 			print(f'Grau {grau}: {frequencia[grau]} estado(s)')
+
+		print('---------------------------------------------------------------------------------------')
 
 	
 
