@@ -17,8 +17,14 @@ if __name__ == '__main__':
 	# Mostra histograma da frequência dos graus
 	MAdj.plotar_histograma_graus()
 
+	# salvar imagem e mostrar da lista de adjacência
 	LisAdj.imprimir_lista()
 	fig,ax = LisAdj.desenhar_grafo()
 	fig.savefig('Lista_Adjacência.png', dpi=200)
 	plt.show()
+
+	#mostra grau maximo, minimo e vizinhos da lista de adjacência
+	LisAdj.mostrar_resultados()
+	LisAdj.plotar_histograma_graus()
+
 
