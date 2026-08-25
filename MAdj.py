@@ -47,7 +47,7 @@ class MAdj:
 		# PB
 		[False, False, False, False, False, True,  False, False, False, False, False, False, False, False, False, True,  False, False, False, True,  False, False, False, False, False, False, False],
 		# PE
-		[False, True,  False, False, True,  True,  False, False, False, False, False, False, False, False, True, False, False, False, False, False, False, False, False, False, False, False, False],
+		[False, True,  False, False, True,  True,  False, False, False, False, False, False, False, False, True, False, True, False, False, False, False, False, False, False, False, False, False],
 		# PI
 		[False, False, False, False, True,  True,  False, False, False, True,  False, False, False, False, False, True,  False, False, False, False, False, False, False, False, False, False, True],
 		# PR
