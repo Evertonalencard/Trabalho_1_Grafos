@@ -4,6 +4,7 @@ from MAdj import MAdj
 from LisAdj import LisAdj
 from LisIndexada import LisIndexada
 from Coloracao import Coloracao
+from TeoCores.front import exibir_mapa_colorido
 
 
 if __name__ == '__main__':
@@ -58,5 +59,11 @@ if __name__ == '__main__':
 	print('\nDicionário para o front-end (estado -> cor hexadecimal):')
 	print(cores_hex_por_estado)
 
+
 	print('\nArquivos gerados: matriz_fronteiras.png, Lista_Adjacência.png, '
 		  'Lista_Indexada.png, Coloracao_4_Cores.png')
+ 
+	exibir_mapa_colorido()
+ 
+ 
+ 

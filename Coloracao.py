@@ -88,6 +88,15 @@ class Coloracao:
 			for estado, indice_cor in cor_do_estado.items()
 		}
 
+	@classmethod
+	def obter_estado_e_cor(cls, cor_do_estado=None):
+		"""Retorna os pares de estado e cor para consumo do front-end.
+
+		O formato retornado é ``{sigla_uf: cor_hexadecimal}``, por exemplo
+		``{'AC': '#e74c3c'}``.
+		"""
+		return cls.obter_cores_hex(cor_do_estado)
+
 	# ---------------------------- Validação ----------------------------
 
 	@classmethod

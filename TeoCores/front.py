@@ -1,7 +1,10 @@
 
 import geopandas as gpd
 import matplotlib.pyplot as plt
-import networkx as nx
+
+from Coloracao import Coloracao
+from MAdj import MAdj
+from TeoCores.ConfigUF import carregar_geodataframe
 
 class MapaBrasil:
     
@@ -10,7 +13,7 @@ class MapaBrasil:
         
     def plotar(self, cores_por_estado: dict, titulo: str = "Mapa do Brasil", caminho_saida: str = "mapa_brasil.png"):
         gdf_plot = self.gdf.copy()
-        gdf_plot["cor"] = gdf_plot.index.map(cores_por_estado)
+        gdf_plot["cor"] = gdf_plot.index.to_series().map(cores_por_estado)
         
         if gdf_plot["cor"].isna().any():
             faltando = gdf_plot[gdf_plot["cor"].isna()].index.tolist()
@@ -28,3 +31,14 @@ class MapaBrasil:
         plt.tight_layout()
         plt.savefig(caminho_saida, dpi=150, bbox_inches="tight")
         plt.show()
+
+
+def exibir_mapa_colorido(caminho_csv: str = "fronteiras.csv", caminho_saida: str = "mapa_brasil.png"):
+    """Calcula as cores e exibe o mapa do Brasil usando GeoPandas."""
+    MAdj.carregar_dados(caminho_csv)
+    estado_e_cor = Coloracao.obter_estado_e_cor()
+    mapa = MapaBrasil(carregar_geodataframe())
+    mapa.plotar(estado_e_cor, caminho_saida=caminho_saida)
+    return estado_e_cor
+
+
