@@ -1,56 +1,62 @@
-import matplotlib
 import matplotlib.pyplot as plt
 
-from LisAdj import LisAdj	
 from MAdj import MAdj
+from LisAdj import LisAdj
 from LisIndexada import LisIndexada
-from TeoCores.ConfigUF import carregar_geodataframe
-from TeoCores.front import  MapaBrasil
+from Coloracao import Coloracao
 
 
 if __name__ == '__main__':
-    gdf = carregar_geodataframe()
-    
-    colorador = ColoradorDeEstados(gdf)
-    cores_por_estado = colorador.calcular_cores()
-    
-    mapa = MapaBrasil(gdf)
-    mapa.plotar(
-        cores_por_estado,
-        titulo="Estados do Brasil - 4 cores, sem vizinhos repetidos",
-        caminho_saida="mapa_brasil_geopandas_classes.png",
-    )
-	
-	# # salvar imagem e mostrar
-	# fig, ax = MAdj.print_matrix()
-	# fig.savefig('matriz_fronteiras.png', dpi=200)
-	# plt.show()
+	# ---------------------------------------------------------------
+	# 0) Entrada de dados: carrega estados e fronteiras de um CSV
+	#    (arquivo de arestas, ver fronteiras.csv). Troque o caminho
+	#    abaixo para usar outro arquivo de entrada.
+	# ---------------------------------------------------------------
+	MAdj.carregar_dados('fronteiras.csv')
+	print(f'{len(MAdj.STATES)} estados carregados: {MAdj.STATES}')
 
-	# #mostra grau maximo, minimo e vizinhos
-	# MAdj.mostrar_resultados()
+	# ---------------------------------------------------------------
+	# 1) Matriz de adjacência
+	# ---------------------------------------------------------------
+	fig, ax = MAdj.print_matrix()
+	fig.savefig('matriz_fronteiras.png', dpi=200)
+	plt.close(fig)
 
-	# # Mostra histograma da frequência dos graus
-	# MAdj.plotar_histograma_graus()
+	MAdj.mostrar_resultados()
+	# MAdj.plotar_histograma_graus()  # abre uma janela interativa
 
-	# # salvar imagem e mostrar da lista de adjacência
-	# LisAdj.imprimir_lista()
-	# fig,ax = LisAdj.desenhar_grafo()
-	# fig.savefig('Lista_Adjacência.png', dpi=200)
-	# plt.show()
+	# ---------------------------------------------------------------
+	# 2) Lista de adjacência
+	# ---------------------------------------------------------------
+	LisAdj.imprimir_lista()
+	fig, ax = LisAdj.desenhar_grafo()
+	fig.savefig('Lista_Adjacência.png', dpi=200)
+	plt.close(fig)
 
-	# #mostra grau maximo, minimo e vizinhos da lista de adjacência
-	# LisAdj.mostrar_resultados()
-	# LisAdj.plotar_histograma_graus()
+	LisAdj.mostrar_resultados()
+	# LisAdj.plotar_histograma_graus()  # abre uma janela interativa
 
-	# LisIndexada.imprimir_lista_indexada()
-	# fig, ax = LisIndexada.plotar_tabelas()
-	# fig.savefig('Lista_Indexada.png', dpi=200)
-	# plt.show()
-	# LisIndexada.plotar_histograma_graus()
+	# ---------------------------------------------------------------
+	# 3) Lista indexada (tabelas alfa e beta)
+	# ---------------------------------------------------------------
+	LisIndexada.imprimir_lista_indexada()
+	fig, (ax_tabelas, ax_grafo) = LisIndexada.plotar_tabelas()
+	fig.savefig('Lista_Indexada.png', dpi=200)
+	plt.close(fig)
+	# LisIndexada.plotar_histograma_graus()  # abre uma janela interativa
 
+	# ---------------------------------------------------------------
+	# 4) Coloração de mapa (Teorema das 4 cores) — algoritmo guloso
+	# ---------------------------------------------------------------
+	cor_do_estado = Coloracao.imprimir_coloracao()
+	fig, ax = Coloracao.desenhar_grafo_colorido(cor_do_estado)
+	fig.savefig('Coloracao_4_Cores.png', dpi=200)
+	plt.close(fig)
 
-	# LisIndexada.gerar_tabelas()
-		
+	# Dicionário {estado: cor_hex} para entregar ao front-end
+	cores_hex_por_estado = Coloracao.obter_cores_hex(cor_do_estado)
+	print('\nDicionário para o front-end (estado -> cor hexadecimal):')
+	print(cores_hex_por_estado)
 
-
-
+	print('\nArquivos gerados: matriz_fronteiras.png, Lista_Adjacência.png, '
+		  'Lista_Indexada.png, Coloracao_4_Cores.png')

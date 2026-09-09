@@ -1,165 +1,188 @@
+import csv
+import os
+
 import matplotlib.pyplot as plt
 
+
 class MAdj:
-	"""Matriz de adjacência booleana entre os 26 estados brasileiros + Distrito Federal.
+	"""Matriz de adjacência booleana entre unidades da federação.
 
-	Ordem usada (índices correspondem às linhas/colunas da matriz):
-	['AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG','MS','MT',
-	 'PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SP','SE','TO']
+	Diferente da versão anterior (matriz fixa no código), os dados agora
+	são carregados de um arquivo de entrada (CSV de arestas). Basta chamar
+	`MAdj.carregar_dados(caminho)` antes de usar as demais funcionalidades.
 
-	`True` indica fronteira entre os estados correspondentes.
+	Formato esperado do CSV (com ou sem cabeçalho):
+		estado_origem,estado_destino
+		AC,AM
+		AC,RO
+		AL,BA
+		...
+
+	Cada linha representa uma fronteira (aresta não-direcionada) entre dois
+	estados. A lista de estados (STATES) é inferida automaticamente a
+	partir dos códigos que aparecem no arquivo, em ordem alfabética.
 	"""
 
-	STATES = [
-		'AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG','MS','MT',
-		'PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SP','SE','TO'
-	]
+	STATES = []
+	MATRIX = []
 
-	MATRIX = [
-		# AC
-		[False, False, True,  False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, True,  False, False, False, False, False, False],
-		# AL
-		[False, False, False, False, True, False, False, False, False, False, False, False, False, False, False, True,  False, False, False, False, False, False, False, False, False, True,  False],
-		# AM
-		[True,  False, False, False, False, False, False, False, False, False, False, False, True,  True,  False, False, False, False, False, False, True,  True,  False, False, False, False, False],
-		# AP
-		[False, False, False, False, False, False, False, False, False, False, False, False, False, True,  False, False, False, False, False, False, False, False, False, False, False, False, False],
-		# BA
-		[False, True,  False, False, False, False, False, True, True,  False, True,  False, False, False, False, True,  True,  False, False, False, False, False, False, False, False, True,  True ],
-		# CE
-		[False, False, False, False, False, False, False, False, False, False, False, False, False, False, True,  True,  True,  False, False, True,  False, False, False, False, False, False, False],
-		# DF
-		[False, False, False, False, False, False, False, False, True,  False, False,  False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False],
-		# ES
-		[False, False, False, False, True, False, False, False, False, False, True,  False, False, False, False, False, False, False, True,  False, False, False, False, False, False, False, False],
-		# GO
-		[False, False, False, False, True,  False, True,  False, False, False, True,  True,  True,  False, False, False, False, False, False, False, False, False, False, False, False, False, True ],
-		# MA
-		[False, False, False, False, False, False, False, False, False, False, False, False, False, True,  False, False, True,  False, False, False, False, False, False, False, False, False, True ],
-		# MG
-		[False, False, False, False, True,  False, False,  True,  True,  False, False, True,  False, False, False, False, False, False, True,  False, False, False, False, False, True,  False, False],
-		# MS
-		[False, False, False, False, False, False, False, False, True,  False, True,  False, True,  False, False, False, False, True,  False, False, False, False, False, False, True,  False, False],
-		# MT
-		[False, False, True,  False, False, False, False, False, True,  False, False, True,  False, True,  False, False, False, False, False, False, True,  False, False, False, False, False, True ],
-		# PA
-		[False, False, True,  True,  False, False, False, False, False, True,  False, False, True,  False, False, False, False, False, False, False, False, True, False, False, False, False, True ],
-		# PB
-		[False, False, False, False, False, True,  False, False, False, False, False, False, False, False, False, True,  False, False, False, True,  False, False, False, False, False, False, False],
-		# PE
-		[False, True,  False, False, True,  True,  False, False, False, False, False, False, False, False, True, False, True, False, False, False, False, False, False, False, False, False, False],
-		# PI
-		[False, False, False, False, True,  True,  False, False, False, True,  False, False, False, False, False, True,  False, False, False, False, False, False, False, False, False, False, True],
-		# PR
-		[False, False, False, False, False, False, False, False, False, False, False, True,  False, False, False, False, False, False, False, False, False, False, False,  True,  True,  False, False],
-		# RJ
-		[False, False, False, False, False, False, False, True,  False, False, True,  False, False, False, False, False, False, False, False, False, False, False, False, False,  True, False, False],
-		# RN
-		[False, False, False, False, False, True,  False, False, False, False, False, False, False, False, True,  False, False, False, False, False, False, False, False, False, False, False, False],
-		# RO
-		[True,  False, True,  False, False, False, False, False, False, False, False, False, True,  False, False, False, False, False, False, False, False, False, False, False, False, False, False],
-		# RR
-		[False, False, True,  False, False, False, False, False, False, False, False, False, False, True, False, False, False, False, False, False, False, False, False, False, False, False, False],
-		# RS
-		[False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False,  False, False, False, False, False, True,  False, False, False],
-		# SC
-		[False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, True,  False, False, False, False, True,  False, False, False, False],
-		# SP
-		[False, False, False, False, False, False, False, False, False, False, True,  True,  False, False, False, False, False, True,  True,  False, False, False, False, False, False, False, False],
-		# SE
-		[False, True,  False, False, True,  False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False],
-		# TO
-		[False, False, False, False, True,  False, False, False, True,  True,  False, False, True,  True,  False, False, True, False, False, False, False, False, False, False, False, False, False],
-	]
+	CAMINHO_PADRAO = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fronteiras.csv')
+
+	# ---------------------------- Entrada de dados ----------------------------
+
+	# Palavras que, se aparecerem na primeira linha, indicam que ela é um
+	# cabeçalho (e não um par de vértices/estados de verdade). A lista é
+	# ampla de propósito, para reconhecer nomes de coluna variados
+	# ('estado_origem', 'regiao_origem', 'source', 'from', 'uf1' etc.).
+	PALAVRAS_CABECALHO = (
+		'origem', 'destino', 'from', 'to', 'source', 'target',
+		'estado', 'regiao', 'região', 'uf', 'vertice', 'vértice', 'vertex',
+		'node', 'pais', 'país', 'municipio', 'município', 'cidade', 'no1', 'no2',
+	)
+
+	@classmethod
+	def carregar_dados(cls, caminho_csv=None, tem_cabecalho=None):
+		"""Lê o arquivo CSV de fronteiras e monta STATES e MATRIX.
+
+		Aceita QUALQUER csv de arestas com 2 colunas (nome do vértice de
+		origem, nome do vértice de destino) — não precisa ser sobre estados
+		brasileiros nem ter esses nomes de coluna específicos.
+
+		Parâmetros:
+		- caminho_csv: caminho do arquivo .csv. Se omitido, usa 'fronteiras.csv'
+		  na mesma pasta deste módulo.
+		- tem_cabecalho: True força ignorar a 1ª linha, False força tratá-la
+		  como dado. Se None (padrão), tenta detectar automaticamente pelas
+		  palavras em PALAVRAS_CABECALHO; se não reconhecer nada, assume que
+		  NÃO há cabeçalho (mais seguro: não perde nenhuma aresta real).
+
+		Retorna a tupla (STATES, MATRIX).
+		"""
+		caminho_csv = caminho_csv or cls.CAMINHO_PADRAO
+
+		if not os.path.isfile(caminho_csv):
+			raise FileNotFoundError(
+				f"Arquivo de entrada não encontrado: '{caminho_csv}'. "
+				"Informe o caminho de um CSV com 2 colunas (origem, destino)."
+			)
+
+		arestas = []
+		estados = []
+
+		with open(caminho_csv, newline='', encoding='utf-8') as f:
+			linhas = list(csv.reader(f))
+
+		if not linhas:
+			raise ValueError(f"Arquivo '{caminho_csv}' está vazio.")
+
+		if tem_cabecalho is None:
+			primeira = ' '.join(c.strip().lower() for c in linhas[0])
+			tem_cabecalho = any(palavra in primeira for palavra in cls.PALAVRAS_CABECALHO)
+
+		inicio = 1 if tem_cabecalho else 0
+
+		for numero_linha, linha in enumerate(linhas[inicio:], start=inicio + 1):
+			linha = [c.strip() for c in linha if c.strip() != '']
+			if not linha:
+				continue  # ignora linhas em branco
+			if len(linha) < 2:
+				raise ValueError(
+					f"Linha {numero_linha} do CSV é inválida (esperado 2 colunas): {linha}"
+				)
+
+			origem, destino = linha[0].upper(), linha[1].upper()
+
+			if origem == destino:
+				raise ValueError(f"Linha {numero_linha}: um estado não pode fazer fronteira consigo mesmo ({origem}).")
+
+			arestas.append((origem, destino))
+			if origem not in estados:
+				estados.append(origem)
+			if destino not in estados:
+				estados.append(destino)
+
+		estados.sort()
+		indice = {estado: i for i, estado in enumerate(estados)}
+		n = len(estados)
+		matriz = [[False] * n for _ in range(n)]
+
+		for origem, destino in arestas:
+			i, j = indice[origem], indice[destino]
+			matriz[i][j] = True
+			matriz[j][i] = True
+
+		cls.STATES = estados
+		cls.MATRIX = matriz
+
+		return cls.STATES, cls.MATRIX
+
+	@classmethod
+	def _garantir_dados_carregados(cls):
+		if not cls.STATES or not cls.MATRIX:
+			cls.carregar_dados()
+
+	# ---------------------------- Visualização ----------------------------
 
 	@classmethod
 	def print_matrix(cls):
 		"""Gera uma visualização da matriz (0/1) usando matplotlib.
 
-		Parâmetros opcionais (chamada: `MAdj.print_matrix(show=True, save_path=None)`):
-		- show: se True, chama `plt.show()` para exibir a figura.
-		- save_path: se fornecido, salva a figura nesse caminho (ex: 'matrix.png').
 		Retorna a tupla `(fig, ax)` criada.
 		"""
-
-		
+		cls._garantir_dados_carregados()
 
 		n = len(cls.STATES)
-		# Converter booleans para 0/1
 		mat = [[1 if cell else 0 for cell in row] for row in cls.MATRIX]
 
 		fig, ax = plt.subplots(figsize=(10, 10))
-		cax = ax.imshow(mat, cmap='Greys', interpolation='nearest', vmin=0, vmax=1)
+		ax.imshow(mat, cmap='Greys', interpolation='nearest', vmin=0, vmax=1)
 
-		# Configurar ticks com as siglas
 		ax.set_xticks(range(n))
 		ax.set_yticks(range(n))
 		ax.set_xticklabels(cls.STATES, rotation=90)
 		ax.set_yticklabels(cls.STATES)
 
-		# Pequeno ajuste visual
 		ax.set_xlabel('Estados')
 		ax.set_ylabel('Estados')
 		ax.set_title('Matriz de Fronteiras (1 = fronteira, 0 = não)')
 		plt.tight_layout()
 
-		# Retornar fig/ax para quem chamar; não forçar show/ save aqui
 		return fig, ax
+
+	# ---------------------------- Análise de graus ----------------------------
 
 	@classmethod
 	def calcular_graus(cls):
+		cls._garantir_dados_carregados()
 		graus = {}
 		for i, estado in enumerate(cls.STATES):
-			grau = sum(cls.MATRIX[i])
-			graus[estado] = grau
+			graus[estado] = sum(cls.MATRIX[i])
 		return graus
-
 
 	@classmethod
 	def listar_vizinhos(cls, estado):
+		cls._garantir_dados_carregados()
 		indice = cls.STATES.index(estado)
-		vizinhos = []
-
-		for j, eh_vizinho in enumerate(cls.MATRIX[indice]):
-			if eh_vizinho:
-				vizinhos.append(cls.STATES[j])
-
-		return vizinhos
+		return [cls.STATES[j] for j, eh_vizinho in enumerate(cls.MATRIX[indice]) if eh_vizinho]
 
 	@classmethod
 	def estados_com_grau_maximo(cls):
 		graus = cls.calcular_graus()
 		maior_grau = max(graus.values())
-
-		estados = []
-		for estado, grau in graus.items():
-			if grau == maior_grau:
-				estados.append(estado)
-
-		return maior_grau, estados
+		return maior_grau, [estado for estado, grau in graus.items() if grau == maior_grau]
 
 	@classmethod
 	def estados_com_grau_minimo(cls):
 		graus = cls.calcular_graus()
 		menor_grau = min(graus.values())
-
-		estados = []
-		for estado, grau in graus.items():
-			if grau == menor_grau:
-				estados.append(estado)
-
-		return menor_grau, estados
+		return menor_grau, [estado for estado, grau in graus.items() if grau == menor_grau]
 
 	@classmethod
 	def frequencia_dos_graus(cls):
 		graus = cls.calcular_graus()
 		frequencia = {}
-
 		for grau in graus.values():
-			if grau not in frequencia:
-				frequencia[grau] = 0
-			frequencia[grau] += 1
-
+			frequencia[grau] = frequencia.get(grau, 0) + 1
 		return frequencia
 
 	@classmethod
@@ -203,10 +226,3 @@ class MAdj:
 			print(f'Grau {grau}: {frequencia[grau]} estado(s)')
 
 		print('---------------------------------------------------------------------------------------')
-
-
-
-	
-
-
-    

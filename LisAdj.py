@@ -31,6 +31,7 @@ class LisAdj:
     @classmethod
     def gerar_lista(cls):
         """Constrói o vetor de vértices, cada um com ID e lista de vizinhos."""
+        MAdj._garantir_dados_carregados()
         n = len(MAdj.STATES)
         vetor_vertices = [None] * n  # vetor de tamanho 27
 

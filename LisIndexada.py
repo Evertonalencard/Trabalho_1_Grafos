@@ -16,6 +16,7 @@ class LisIndexada:
 	@classmethod
 	def gerar_tabelas(cls):
 		"""Retorna as tabelas alfa e beta construídas a partir da matriz."""
+		MAdj._garantir_dados_carregados()
 		alfa = []
 		beta = []
 		proxima_posicao = 1
